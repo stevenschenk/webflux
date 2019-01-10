@@ -39,7 +39,7 @@ public class TemperatureService {
     public Temperature getLive() {
         return repository.findAll()
                 .stream()
-                .min(Comparator.comparing(Temperature::getTimestamp))
+                .max(Comparator.comparing(Temperature::getTimestamp))
                 .map(TemperatureConverter::toCelsius)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
