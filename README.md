@@ -17,7 +17,27 @@ MongoDb starter met de reactive variant.
 ### Repositories
 Nu we beschikking hebben over een reactive database driver moeten we er nog voor zorgen dat deze ook
 goed benut wordt. Hiervoor moeten we de repositories aanpassen. Zorg dat repositories 'reactive' 
-worden en pas waar nodig de return types van de Services en Controllers aan.
+worden. De return types van de repositories zullen veranderen naar een __Mono__ of __Flux__.
+Laat de return types van de methoden in de controllers ongewijzigd. Je zult dus een Mono of Flux
+om moeten zetten naar de juiste return type.
+
+### Testing
+De code is gewijzigd dus dit zal waarschijnlijk invloed hebben op de tests. Pas waar nodig de
+tests aan en run de integration tests:
+
+```
+mvn test
+```
+
+---
+**TIP**
+
+De __save()__ method van de repository returnt ook een Flux of Mono. Flux en Mono zijn beiden 
+lazy evaluated.
+
+---
+
+
 
 
 
