@@ -26,7 +26,7 @@ public class TemperatureService {
      */
     public List<Temperature> findAll() {
         return repository.findAll()
-                .stream()
+                .toStream()
                 .map(TemperatureConverter::toCelsius)
                 .collect(Collectors.toList());
     }
@@ -38,7 +38,7 @@ public class TemperatureService {
      */
     public Temperature getLive() {
         return repository.findAll()
-                .stream()
+                .toStream()
                 .max(Comparator.comparing(Temperature::getTimestamp))
                 .map(TemperatureConverter::toCelsius)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
