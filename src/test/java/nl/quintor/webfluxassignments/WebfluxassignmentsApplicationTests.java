@@ -46,7 +46,6 @@ public class WebfluxassignmentsApplicationTests {
         );
 
         repository.saveAll(dummyTemperature).subscribe();
-
     }
 
     @Test

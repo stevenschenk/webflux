@@ -1,43 +1,38 @@
-# Opdracht 1
-In deze opdracht gaan we de __Repositories__ veranderen zodat deze reactive communiceren met de
-database. 
+# Opdracht 2
+In deze opdracht gaan we de Controllers en Services veranderen zodat deze
+de Mono en Flux types gaan gebruiken. 
 
 ### Branch
 
-Doe een checkout op branch __assignment-1-start__:
+Mocht de vorige opdracht niet gelukt zijn, doe dan een checkout op 
+branch __assignment-1-start__:
 ```
-git checkout assignment-1-start
+git checkout assignment-2-start
 ```
 
-### Pom.xml
-Voor een reactive connectie met de database is een reactive database driver nodig. Gelukkig is er voor
-MongoDb een spring starter: __spring-boot-starter-data-mongodb-reactive__. Vervang de huidige
-MongoDb starter met de reactive variant.
+Anders werk verder met je bestaande code.
 
-### Repositories
-Nu we beschikking hebben over een reactive database driver moeten we er nog voor zorgen dat deze ook
-goed benut wordt. Hiervoor moeten we de repositories aanpassen. Zorg dat repositories 'reactive' 
-worden. De return types van de repositories zullen veranderen naar een __Mono__ of __Flux__.
-Laat de return types van de methoden in de controllers ongewijzigd. Je zult dus een Mono of Flux
-om moeten zetten naar de juiste return type.
+
+### Services
+In Spring Webflux kunnen we vanaf de database een stream opzetten naar de controllers. Hiervoor
+moeten uiteraard de Services herschreven worden. Zorg dat de Services ook de Flux en 
+Mono types returnen. 
+
+### Controllers
+Spring Webflux kan omgaan met Flux en Mono als return types. Dit zorgt ervoor dat de stream
+pas echt gebruikt gaat worden op het moment dat het nodig is. Het enigste wat je hiervoor hoeft
+te doen is de return types van de Controller methods aanpassen.
 
 ### Testing
 De code is gewijzigd dus dit zal waarschijnlijk invloed hebben op de tests. Pas waar nodig de
-tests aan en run de integration tests:
+tests aan en run de tests:
 
 ```
 mvn test
 ```
 
----
-**TIP**
 
-De __save()__ method van de repository returnt ook een Flux of Mono. Flux en Mono zijn beiden 
-lazy evaluated.
-
----
-
-Als alles goed werkt kan je verder met opdracht 2
+Als alles goed werkt kan je verder met opdracht 3
 
 
 

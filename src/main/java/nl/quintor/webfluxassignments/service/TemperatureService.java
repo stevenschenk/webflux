@@ -43,4 +43,5 @@ public class TemperatureService {
                 .map(TemperatureConverter::toCelsius)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
+
 }
