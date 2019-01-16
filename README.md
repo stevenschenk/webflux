@@ -5,7 +5,7 @@ de Mono en Flux types gaan gebruiken.
 ### Branch
 
 Mocht de vorige opdracht niet gelukt zijn, doe dan een checkout op 
-branch __assignment-1-start__:
+branch __assignment-2-start__:
 ```
 git checkout assignment-2-start
 ```
