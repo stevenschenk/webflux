@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/temperature")
@@ -27,7 +27,7 @@ public class TemperatureController {
      * @return collection of temperatures from database.
      */
     @GetMapping
-    public List<Temperature> findAll() {
+    public Flux<Temperature> findAll() {
         return temperatureService.findAll();
     }
 
@@ -36,14 +36,17 @@ public class TemperatureController {
      * @return latest temperature in database.
      */
     @GetMapping("/live")
-    public Temperature getLive() {
+    public Mono<Temperature> getLive() {
         return temperatureService.getLive();
     }
 
 
     @ExceptionHandler(InvalidTemperatureUnitException.class)
     public ResponseEntity ExceptionHandler(InvalidTemperatureUnitException exception) {
+
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Unprocessable temperature unit in resource");
+
     }
 }

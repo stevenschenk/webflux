@@ -6,6 +6,8 @@ import nl.quintor.webfluxassignments.repository.TemperatureRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,25 +24,26 @@ public class TemperatureService {
     /**
      * Find all temperatures in the database and convert them
      * all to degrees Celsius.
+     *
      * @return temperatures in degrees Celsius
      */
-    public List<Temperature> findAll() {
+    public Flux<Temperature> findAll() {
         return repository.findAll()
-                .toStream()
                 .map(TemperatureConverter::toCelsius)
-                .collect(Collectors.toList());
+                .onErrorContinue((t, o) -> System.out.println(t.getMessage()));
     }
 
     /**
      * Get latest temperature and convert it to degrees
      * Celsius.
+     *
      * @return latest temperature in degrees Celsius.
      */
-    public Temperature getLive() {
+    public Mono<Temperature> getLive() {
         return repository.findAll()
-                .toStream()
-                .max(Comparator.comparing(Temperature::getTimestamp))
+                .sort(Comparator.comparing(Temperature::getTimestamp))
                 .map(TemperatureConverter::toCelsius)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
+                .onErrorContinue((t, o) -> System.out.println(t.getMessage()))
+                .last();
     }
 }
