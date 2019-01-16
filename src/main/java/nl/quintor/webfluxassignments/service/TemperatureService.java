@@ -46,4 +46,5 @@ public class TemperatureService {
                 .onErrorContinue((t, o) -> System.out.println(t.getMessage()))
                 .last();
     }
+
 }
