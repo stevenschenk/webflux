@@ -23,6 +23,12 @@ Spring Webflux kan omgaan met Flux en Mono als return types. Dit zorgt ervoor da
 pas echt gebruikt gaat worden op het moment dat het nodig is. Het enigste wat je hiervoor hoeft
 te doen is de return types van de Controller methods aanpassen.
 
+### Error handling
+De sensor die de metingen doet geeft af en toe incomplete data terug. Dit zorgt ervoor
+dat de endpoints niet werken als er incomplete data in de database is. Dit is natuurlijk niet 
+wat we willen. Zorg dat de endpoints gewoon blijven werken als de data uit de database niet 
+helemaal klopt. Entries die niet kloppen mogen overgeslagen worden. 
+
 ### Testing
 De code is gewijzigd dus dit zal waarschijnlijk invloed hebben op de tests. Pas waar nodig de
 tests aan en run de tests:
