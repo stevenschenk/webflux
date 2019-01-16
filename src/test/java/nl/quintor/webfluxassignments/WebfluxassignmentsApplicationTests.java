@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,7 +51,7 @@ public class WebfluxassignmentsApplicationTests {
     }
 
     @Test
-    public void findAll() {
+    public void     findAll() {
         var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature", Temperature[].class);
 
         assertThat(reponse.getStatusCode(), is(HttpStatus.OK));
@@ -57,13 +59,13 @@ public class WebfluxassignmentsApplicationTests {
     }
 
     @Test
-    public void findAllFail() {
+    public void findAllWithDirtyData() {
         repository.save(Temperature.builder().temperature(12).timestamp(LocalDateTime.now()).build()).subscribe();
 
-        var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature", String.class);
+        var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature", Temperature[].class);
 
-        assertThat(reponse.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
-        assertThat(reponse.getBody(), is("Unprocessable temperature unit in resource"));
+        assertThat(reponse.getStatusCode(), is(HttpStatus.OK));
+        assertThat(reponse.getBody().length, is(3));
     }
 
     @Test
@@ -79,13 +81,27 @@ public class WebfluxassignmentsApplicationTests {
     }
 
     @Test
-    public void getLiveFail() {
-        repository.save(Temperature.builder().temperature(12).timestamp(LocalDateTime.now()).build()).subscribe();
+    public void getLiveWithDirtyData() {
+        var timestamp = LocalDateTime.of(LocalDate.now().plusYears(2).getYear(), 1, 1, 1,1,1);
 
-        var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature", String.class);
+        var badTemp = Temperature.builder()
+                .temperature(12)
+                .timestamp(timestamp)
+                .build();
 
-        assertThat(reponse.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
-        assertThat(reponse.getBody(), is("Unprocessable temperature unit in resource"));
+        var goodTemp = Temperature.builder()
+                .temperature(13)
+                .unit(Unit.CELSIUS)
+                .timestamp(timestamp.minusYears(1))
+                .build();
+
+        repository.save(goodTemp).subscribe();
+        repository.save(badTemp).subscribe();
+
+        var response = restTemplate.getForEntity("http://localhost:"+ port+"/temperature/live", Temperature.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), is(goodTemp));
     }
 
 }
