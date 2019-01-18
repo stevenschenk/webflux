@@ -38,7 +38,8 @@ mvn test
 ```
 
 
-Als alles goed werkt kan je verder met opdracht 3
+Wanneer dit allemaal werkt kan je verder met [opdracht 3](https://git.quintor.nl/SG-QuintorAcademy/webflux-hands-on/tree/assignment-3-start)
+
 
 
 
