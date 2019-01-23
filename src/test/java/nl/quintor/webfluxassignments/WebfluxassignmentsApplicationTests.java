@@ -37,7 +37,8 @@ public class WebfluxassignmentsApplicationTests {
 
     @Before
     public void setupDatabase() {
-        repository.deleteAll().subscribe();
+        repository.deleteAll();
+
 
         var dummyTemperature = Arrays.asList(
                 Temperature.builder().temperature(12.01).unit(Unit.CELSIUS).timestamp(LocalDateTime.now()).build(),
@@ -45,7 +46,8 @@ public class WebfluxassignmentsApplicationTests {
                 Temperature.builder().temperature(13.81).unit(Unit.CELSIUS).timestamp(LocalDateTime.now()).build()
         );
 
-        repository.saveAll(dummyTemperature).subscribe();
+        repository.saveAll(dummyTemperature);
+
     }
 
     @Test
@@ -58,7 +60,8 @@ public class WebfluxassignmentsApplicationTests {
 
     @Test
     public void findAllFail() {
-        repository.save(Temperature.builder().temperature(12).timestamp(LocalDateTime.now()).build()).subscribe();
+        repository.save(Temperature.builder().temperature(12).timestamp(LocalDateTime.now()).build());
+
 
         var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature", String.class);
 
@@ -70,7 +73,8 @@ public class WebfluxassignmentsApplicationTests {
     public void getLive() {
         var timestamp = LocalDateTime.of(LocalDate.now().getYear() + 1, 1, 1, 1, 1);
         var temp = Temperature.builder().temperature(12).unit(Unit.CELSIUS).timestamp(timestamp).build();
-        repository.save(temp).subscribe();
+        repository.save(temp);
+
 
         var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature/live", Temperature.class);
 
@@ -80,7 +84,8 @@ public class WebfluxassignmentsApplicationTests {
 
     @Test
     public void getLiveFail() {
-        repository.save(Temperature.builder().temperature(12).timestamp(LocalDateTime.now()).build()).subscribe();
+        repository.save(Temperature.builder().temperature(12).timestamp(LocalDateTime.now()).build());
+
 
         var reponse = restTemplate.getForEntity("http://localhost:"+ port+"/temperature", String.class);
 

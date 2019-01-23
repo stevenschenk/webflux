@@ -30,12 +30,17 @@ wat we willen. Zorg dat de endpoints gewoon blijven werken als de data uit de da
 helemaal klopt. Entries die niet kloppen mogen overgeslagen worden. 
 
 ### Testing
-De code is gewijzigd dus dit zal waarschijnlijk invloed hebben op de tests. Pas waar nodig de
-tests aan en run de tests:
+Pas nu alle testen aan zodat deze weer werken. Gebruik vanaf nu geen `TestRestTemplate` meer maar gebruik
+`WebTestClient` en `StepVerifier` voor de unit en integration tests. AutoWire `MongoService` zodat je 
+deze kan gebruiken om in de Setup() de collection to clearen.
 
 ```
 mvn test
 ```
+---
+**tip**
+De methods `save()` en `saveAll()` returnen ook een Mono of Flux. Deze zijn dus lazy loaded.
+---
 
 
 Wanneer dit allemaal werkt kan je verder met [opdracht 3](https://git.quintor.nl/SG-QuintorAcademy/webflux-hands-on/tree/assignment-3-start)
