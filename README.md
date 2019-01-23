@@ -50,11 +50,6 @@ mvn test
 ```
 
 ---
-**tip**
-De `TestRestTemplate` kan niet goed omgaan met event streams. Gelukkig is er voor Spring Webflux
-de `WebTestClient`. Hiermee is het heel makkelijk om Reactive web applicaties te Integration testen.
-
----
 
 Wanneer dit allemaal werkt kan je verder met [opdracht 4](https://git.quintor.nl/SG-QuintorAcademy/webflux-hands-on/tree/assignment-4-start)
 
