@@ -31,7 +31,7 @@ helemaal klopt. Entries die niet kloppen mogen overgeslagen worden.
 
 ### Testing
 Pas nu alle testen aan zodat deze weer werken. Gebruik vanaf nu geen `TestRestTemplate` meer maar gebruik
-`WebTestClient` en `StepVerifier` voor de unit en integration tests. AutoWire `MongoService` zodat je 
+`WebTestClient` voor integration tests. Maak voor de service nu ook Unit tests met behulp van de `StepVerifier`. AutoWire `MongoService` zodat je 
 deze kan gebruiken om in de Setup() de collection to clearen.
 
 ```
